@@ -1,0 +1,349 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/liberatedsystems/RNode_Firmware_CE/boards_manifest.schema.json",
+  "title": "RNode Firmware CE Boards Manifest",
+  "description": "Schema for validating boards_manifest.json — describes supported hardware for RNode Firmware CE.",
+  "type": "object",
+  "required": ["manifest_version", "repo_name", "repo_url", "firmware_base_url", "boards"],
+  "additionalProperties": false,
+
+  "properties": {
+
+    "$schema": { "type": "string" },
+
+    "manifest_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$",
+      "description": "Semantic major.minor version of this manifest format"
+    },
+
+    "repo_name":         { "type": "string" },
+    "repo_url":          { "type": "string", "format": "uri" },
+    "firmware_base_url": {
+      "type": "string",
+      "description": "URL template; {version} will be substituted at runtime"
+    },
+    "rns_dest": {
+      "type": ["string", "null"],
+      "description": "Optional RNS destination override"
+    },
+
+    "boards": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/Board" }
+    }
+  },
+
+  "definitions": {
+
+    "HexByte": {
+      "type": "string",
+      "pattern": "^0x[0-9A-Fa-f]{2}$",
+      "description": "A single-byte hex value, e.g. '0x10'"
+    },
+
+    "PinNumber": {
+      "type": "integer",
+      "minimum": -1,
+      "description": "GPIO pin number; -1 means not connected / not present"
+    },
+
+    "WakeupConfig": {
+      "type": "object",
+      "required": ["pin", "level"],
+      "additionalProperties": false,
+      "properties": {
+        "pin": {
+          "type": "string",
+          "description": "Arduino / ESP-IDF gpio_num_t constant, e.g. 'GPIO_NUM_21'"
+        },
+        "level": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Logic level on the wakeup pin that triggers wakeup (0=LOW, 1=HIGH)"
+        }
+      }
+    },
+
+    "DisplayConfig": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "description": "Display hardware description. 'type' is always required. I2C fields (scl/sda/rst/addr) are required for OLED/MONO_OLED displays. 'driver' is required for e-ink displays.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["OLED", "EINK_BW", "EINK_3C", "MONO_OLED", "TFT"],
+          "description": "Firmware display driver constant matching the DISPLAY #define in Boards.h"
+        },
+        "driver": {
+          "type": "string",
+          "description": "GxEPD2 or Adafruit driver class name. Required for EINK_BW and EINK_3C; omit for OLED and TFT."
+        },
+        "scl":  { "$ref": "#/definitions/PinNumber", "description": "I2C clock pin. Required for OLED/MONO_OLED displays." },
+        "sda":  { "$ref": "#/definitions/PinNumber", "description": "I2C data pin. Required for OLED/MONO_OLED displays." },
+        "rst":  { "$ref": "#/definitions/PinNumber", "description": "Reset pin; -1 if tied to MCU reset or not present." },
+        "addr": {
+          "type": "string",
+          "pattern": "^0x[0-9A-Fa-f]{2}$",
+          "description": "I2C address. Required for OLED/MONO_OLED displays."
+        }
+      },
+      "allOf": [
+        {
+          "description": "OLED displays require I2C bus fields",
+          "if":   { "properties": { "type": { "const": "OLED" } } },
+          "then": { "required": ["scl", "sda", "rst", "addr"] }
+        },
+        {
+          "description": "MONO_OLED displays require I2C bus fields",
+          "if":   { "properties": { "type": { "const": "MONO_OLED" } } },
+          "then": { "required": ["scl", "sda", "rst", "addr"] }
+        },
+        {
+          "description": "E-ink displays require a driver class name",
+          "if": { "properties": { "type": { "enum": ["EINK_BW", "EINK_3C"] } } },
+          "then": { "required": ["driver"] }
+        }
+      ]
+    },
+
+    "BleConfig": {
+      "type": "object",
+      "required": ["manufacturer", "model"],
+      "additionalProperties": false,
+      "properties": {
+        "manufacturer": { "type": "string" },
+        "model":        { "type": "string" }
+      }
+    },
+
+    "FlashParams": {
+      "type": "object",
+      "required": ["mode", "freq", "size", "offset_app", "offset_console"],
+      "additionalProperties": false,
+      "properties": {
+        "mode":           { "type": "string", "enum": ["dio", "qio", "dout", "qout"] },
+        "freq":           { "type": "string", "enum": ["40m", "80m"] },
+        "size":           { "type": "string", "enum": ["2MB", "4MB", "8MB", "16MB"] },
+        "offset_app":     { "type": "string", "pattern": "^0x[0-9A-Fa-f]+$" },
+        "offset_console": { "type": "string", "pattern": "^0x[0-9A-Fa-f]+$" }
+      }
+    },
+
+    "Capabilities": {
+      "description": "Boolean feature flags only. Non-boolean display metadata lives in 'display'; interface_count lives at board top-level.",
+      "type": "object",
+      "required": [
+        "has_display",
+        "has_bluetooth",
+        "has_ble",
+        "has_console",
+        "has_pmu",
+        "has_np",
+        "has_sd",
+        "has_tcxo",
+        "has_eeprom",
+        "has_rf_switch_rx_tx",
+        "has_busy",
+        "has_input",
+        "dio2_as_rf_switch",
+        "has_sleep"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "has_display":         { "type": "boolean", "description": "True if a display is present on the board (or on a supported expansion module)" },
+        "has_bluetooth":       { "type": "boolean", "description": "True if classic Bluetooth (BR/EDR) stack is available" },
+        "has_ble":             { "type": "boolean", "description": "True if Bluetooth Low Energy stack is available" },
+        "has_console":         { "type": "boolean", "description": "True if a serial ROM console is supported (CONFIG_ROM_CONSOLE)" },
+        "has_pmu":             { "type": "boolean", "description": "True if a PMIC / power management unit is present (e.g. SY6970 on T-Echo)" },
+        "has_np":              { "type": "boolean", "description": "True if a NeoPixel / WS2812 addressable LED is present" },
+        "has_sd":              { "type": "boolean", "description": "True if an SD card slot is present" },
+        "has_tcxo":            { "type": "boolean", "description": "True if a TCXO is fitted on the board or module" },
+        "has_eeprom":          { "type": "boolean", "description": "True if persistent storage is provided via the Arduino EEPROM API (emulated flash on ESP32, UICR on NRF52)" },
+        "has_rf_switch_rx_tx": { "type": "boolean", "description": "True if discrete RX/TX enable lines drive an external RF switch" },
+        "has_busy":            { "type": "boolean", "description": "True if the radio BUSY pin is wired to the MCU" },
+        "has_input":           { "type": "boolean", "description": "True if at least one user-input button is present" },
+        "dio2_as_rf_switch":   { "type": "boolean", "description": "True if DIO2 is configured as modem-internal RF switch control (SX1262 DIO2AsRfSwitchCtrl)" },
+        "has_sleep":           { "type": "boolean", "description": "True if the board supports MCU deep-sleep and has a defined wakeup source" }
+      }
+    },
+
+    "Memory": {
+      "type": "object",
+      "required": ["uart_buffer_size", "queue_size", "queue_max_length", "eeprom_size"],
+      "additionalProperties": false,
+      "properties": {
+        "uart_buffer_size": {
+          "type": "integer",
+          "minimum": 1024,
+          "description": "CONFIG_UART_BUFFER_SIZE in bytes; typically 6144 but 32768 on T-Echo"
+        },
+        "queue_size":       { "type": "integer", "minimum": 1024 },
+        "queue_max_length": { "type": "integer", "minimum": 1 },
+        "eeprom_size":      { "type": "integer", "minimum": 256 }
+      }
+    },
+
+    "ModelPins": {
+      "type": "object",
+      "required": ["cs", "reset", "dio"],
+      "additionalProperties": true,
+      "description": "Radio module pin assignments. Required set is modem-dependent; see per-property descriptions.",
+      "properties": {
+        "cs":          { "$ref": "#/definitions/PinNumber", "description": "SPI chip-select / NSS" },
+        "reset":       { "$ref": "#/definitions/PinNumber" },
+        "dio":         { "$ref": "#/definitions/PinNumber", "description": "DIO0 / DIO1 interrupt pin" },
+        "busy":        { "$ref": "#/definitions/PinNumber", "description": "BUSY pin — required for SX1262 / SX1268 / SX1280" },
+        "rxen":        { "$ref": "#/definitions/PinNumber", "description": "RX-enable output for external RF switch" },
+        "txen":        { "$ref": "#/definitions/PinNumber", "description": "TX-enable output for external RF switch" },
+        "sclk":        { "$ref": "#/definitions/PinNumber", "description": "SPI clock; required on NRF52 and any board using non-default SPI" },
+        "mosi":        { "$ref": "#/definitions/PinNumber", "description": "SPI MOSI; required on NRF52 and any board using non-default SPI" },
+        "miso":        { "$ref": "#/definitions/PinNumber", "description": "SPI MISO; required on NRF52 and any board using non-default SPI" },
+        "tcxo_enable": { "$ref": "#/definitions/PinNumber", "description": "MCU-controlled TCXO enable pin; -1 when modem controls TCXO via DIO3" },
+        "led_rx":      { "$ref": "#/definitions/PinNumber" },
+        "led_tx":      { "$ref": "#/definitions/PinNumber" },
+        "np":          { "$ref": "#/definitions/PinNumber", "description": "NeoPixel data pin" },
+        "disp_sleep":  { "$ref": "#/definitions/PinNumber", "description": "Display VEXT / power-enable pin (e.g. Heltec boards)" }
+      }
+    },
+
+    "Model": {
+      "type": "object",
+      "required": [
+        "model", "display_name", "modem",
+        "min_freq", "max_freq", "default_txp",
+        "firmware_file", "pins"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "model":         { "$ref": "#/definitions/HexByte" },
+        "display_name":  { "type": "string" },
+        "modem": {
+          "type": "string",
+          "enum": ["SX1262", "SX1268", "SX1276", "SX1278", "SX1280"],
+          "description": "Semtech modem chip identifier"
+        },
+        "min_freq":      { "type": "integer", "minimum": 137000000, "description": "Minimum operating frequency in Hz" },
+        "max_freq":      { "type": "integer", "minimum": 137000000, "description": "Maximum operating frequency in Hz" },
+        "default_txp":   { "type": "integer", "minimum": -9, "maximum": 27, "description": "Default TX power in dBm" },
+        "firmware_file": { "type": "string", "pattern": "\\.zip$" },
+        "pins":          { "$ref": "#/definitions/ModelPins" }
+      }
+    },
+
+    "Board": {
+      "type": "object",
+      "required": [
+        "name", "display_name", "product", "board_id",
+        "mcu", "platform", "fqbn", "upload_protocol",
+        "interface_count",
+        "capabilities", "memory", "ble", "models"
+      ],
+      "additionalProperties": true,
+      "description": "A supported hardware target. Non-boolean board metadata (display type/driver, interface count) lives here at board level, not inside capabilities.",
+      "properties": {
+
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_]+$",
+          "description": "Machine-readable identifier used as a key in tooling"
+        },
+        "display_name": { "type": "string" },
+        "product":      { "$ref": "#/definitions/HexByte" },
+        "board_id": {
+          "type": "string",
+          "pattern": "^BOARD_[A-Z0-9_]+$",
+          "description": "C preprocessor symbol defined in Boards.h"
+        },
+        "mcu": {
+          "type": "string",
+          "enum": ["MCU_ESP32", "MCU_ESP32S3", "MCU_NRF52", "MCU_AVR", "MCU_STM32"]
+        },
+        "platform": {
+          "type": "string",
+          "enum": ["ESP32", "NRF52", "AVR", "STM32"]
+        },
+        "fqbn":            { "type": "string", "description": "Arduino / arduino-cli fully-qualified board name" },
+        "upload_protocol": {
+          "type": "string",
+          "enum": ["esptool", "nrfutil", "avrdude", "stlink"]
+        },
+
+        "interface_count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum simultaneous radio interfaces. Maps to INTERFACE_COUNT in Boards.h."
+        },
+
+        "flash_params":  { "$ref": "#/definitions/FlashParams" },
+        "capabilities":  { "$ref": "#/definitions/Capabilities" },
+        "wakeup":        { "$ref": "#/definitions/WakeupConfig" },
+        "display":       { "$ref": "#/definitions/DisplayConfig" },
+        "memory":        { "$ref": "#/definitions/Memory" },
+
+        "ble": {
+          "oneOf": [
+            { "$ref": "#/definitions/BleConfig" },
+            { "type": "null" }
+          ]
+        },
+
+        "models": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/Model" }
+        }
+      },
+
+      "allOf": [
+        {
+          "description": "ESP32 / ESP32-S3 boards must include flash_params",
+          "if":   { "properties": { "platform": { "const": "ESP32" } } },
+          "then": { "required": ["flash_params"] }
+        },
+        {
+          "description": "Boards with has_display:true must include a 'display' object",
+          "if": {
+            "properties": {
+              "capabilities": {
+                "properties": { "has_display": { "const": true } },
+                "required": ["has_display"]
+              }
+            }
+          },
+          "then": { "required": ["display"] }
+        },
+        {
+          "description": "Boards with has_sleep:true must include a 'wakeup' object",
+          "if": {
+            "properties": {
+              "capabilities": {
+                "properties": { "has_sleep": { "const": true } },
+                "required": ["has_sleep"]
+              }
+            }
+          },
+          "then": { "required": ["wakeup"] }
+        },
+        {
+          "description": "Boards with has_ble:true must have a non-null 'ble' object",
+          "if": {
+            "properties": {
+              "capabilities": {
+                "properties": { "has_ble": { "const": true } },
+                "required": ["has_ble"]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "ble": { "$ref": "#/definitions/BleConfig" }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

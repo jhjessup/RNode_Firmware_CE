@@ -1,0 +1,707 @@
+{
+  "$schema": "./boards_manifest.schema.json",
+  "manifest_version": "1.2",
+  "repo_name": "RNode Firmware CE",
+  "repo_url": "https://github.com/liberatedsystems/RNode_Firmware_CE",
+  "firmware_base_url": "https://github.com/liberatedsystems/RNode_Firmware_CE/releases/download/{version}/",
+  "rns_dest": null,
+  "boards": [
+    {
+      "name": "RAK4631",
+      "display_name": "RAK4631 WisBlock Core",
+      "product": "0x10",
+      "board_id": "BOARD_RAK4631",
+      "mcu": "MCU_NRF52",
+      "platform": "NRF52",
+      "fqbn": "rakwireless:nrf52:WisCoreRAK4631Board",
+      "upload_protocol": "nrfutil",
+      "interface_count": 2,
+      "capabilities": {
+        "has_display": true,
+        "has_bluetooth": false,
+        "has_ble": true,
+        "has_console": false,
+        "has_pmu": false,
+        "has_np": false,
+        "has_sd": false,
+        "has_tcxo": true,
+        "has_eeprom": false,
+        "has_rf_switch_rx_tx": true,
+        "has_busy": true,
+        "has_input": true,
+        "dio2_as_rf_switch": true,
+        "has_sleep": false
+      },
+      "display": {
+        "type": "OLED",
+        "scl": 14,
+        "sda": 13,
+        "rst": -1,
+        "addr": "0x3C"
+      },
+      "memory": {
+        "uart_buffer_size": 6144,
+        "queue_size": 6144,
+        "queue_max_length": 200,
+        "eeprom_size": 296
+      },
+      "ble": {
+        "manufacturer": "RAK Wireless",
+        "model": "RAK4640"
+      },
+      "models": [
+        {
+          "model": "0x11",
+          "display_name": "RAK4631, 430-510 MHz",
+          "modem": "SX1262",
+          "min_freq": 430000000,
+          "max_freq": 510000000,
+          "default_txp": 22,
+          "firmware_file": "rnode_firmware_rak4631.zip",
+          "pins": {
+            "cs": 42,
+            "reset": 38,
+            "dio": 47,
+            "busy": 46,
+            "rxen": 37,
+            "txen": 39,
+            "sclk": 43,
+            "mosi": 44,
+            "miso": 45,
+            "tcxo_enable": -1,
+            "led_rx": -1,
+            "led_tx": -1,
+            "np": -1
+          }
+        },
+        {
+          "model": "0x12",
+          "display_name": "RAK4631, 860-930 MHz",
+          "modem": "SX1262",
+          "min_freq": 860000000,
+          "max_freq": 930000000,
+          "default_txp": 22,
+          "firmware_file": "rnode_firmware_rak4631.zip",
+          "pins": {
+            "cs": 42,
+            "reset": 38,
+            "dio": 47,
+            "busy": 46,
+            "rxen": 37,
+            "txen": 39,
+            "sclk": 43,
+            "mosi": 44,
+            "miso": 45,
+            "tcxo_enable": -1,
+            "led_rx": -1,
+            "led_tx": -1,
+            "np": -1
+          }
+        }
+      ]
+    },
+    {
+      "name": "LilyGO_T_Echo",
+      "display_name": "LilyGO T-Echo",
+      "product": "0x15",
+      "board_id": "BOARD_TECHO",
+      "mcu": "MCU_NRF52",
+      "platform": "NRF52",
+      "fqbn": "adafruit:nrf52:feather52840",
+      "upload_protocol": "nrfutil",
+      "interface_count": 1,
+      "capabilities": {
+        "has_display": true,
+        "has_bluetooth": false,
+        "has_ble": true,
+        "has_console": false,
+        "has_pmu": true,
+        "has_np": false,
+        "has_sd": false,
+        "has_tcxo": true,
+        "has_eeprom": false,
+        "has_rf_switch_rx_tx": false,
+        "has_busy": true,
+        "has_input": true,
+        "dio2_as_rf_switch": true,
+        "has_sleep": false
+      },
+      "display": {
+        "type": "EINK_BW",
+        "driver": "GxEPD2_154_D67"
+      },
+      "memory": {
+        "uart_buffer_size": 32768,
+        "queue_size": 6144,
+        "queue_max_length": 200,
+        "eeprom_size": 296
+      },
+      "ble": {
+        "manufacturer": "LilyGO",
+        "model": "T-Echo"
+      },
+      "models": [
+        {
+          "model": "0x16",
+          "display_name": "T-Echo, 433 MHz",
+          "modem": "SX1262",
+          "min_freq": 410000000,
+          "max_freq": 510000000,
+          "default_txp": 22,
+          "firmware_file": "rnode_firmware_techo.zip",
+          "pins": {
+            "cs": 36,
+            "reset": 31,
+            "dio": 28,
+            "busy": 32,
+            "rxen": -1,
+            "txen": -1,
+            "sclk": 34,
+            "mosi": 33,
+            "miso": 35,
+            "tcxo_enable": -1,
+            "led_rx": -1,
+            "led_tx": -1,
+            "np": -1
+          }
+        },
+        {
+          "model": "0x17",
+          "display_name": "T-Echo, 868/915 MHz",
+          "modem": "SX1262",
+          "min_freq": 860000000,
+          "max_freq": 930000000,
+          "default_txp": 22,
+          "firmware_file": "rnode_firmware_techo.zip",
+          "pins": {
+            "cs": 36,
+            "reset": 31,
+            "dio": 28,
+            "busy": 32,
+            "rxen": -1,
+            "txen": -1,
+            "sclk": 34,
+            "mosi": 33,
+            "miso": 35,
+            "tcxo_enable": -1,
+            "led_rx": -1,
+            "led_tx": -1,
+            "np": -1
+          }
+        }
+      ]
+    },
+    {
+      "name": "LilyGO_LoRa32_v21",
+      "display_name": "LilyGO LoRa32 v2.1",
+      "product": "0xB2",
+      "board_id": "BOARD_LORA32_V21",
+      "mcu": "MCU_ESP32",
+      "platform": "ESP32",
+      "fqbn": "esp32:esp32:ttgo-lora32",
+      "upload_protocol": "esptool",
+      "interface_count": 1,
+      "flash_params": {
+        "mode": "dio",
+        "freq": "80m",
+        "size": "4MB",
+        "offset_app": "0x10000",
+        "offset_console": "0x210000"
+      },
+      "capabilities": {
+        "has_display": true,
+        "has_bluetooth": true,
+        "has_ble": false,
+        "has_console": true,
+        "has_pmu": false,
+        "has_np": true,
+        "has_sd": false,
+        "has_tcxo": false,
+        "has_eeprom": true,
+        "has_rf_switch_rx_tx": false,
+        "has_busy": false,
+        "has_input": false,
+        "dio2_as_rf_switch": false,
+        "has_sleep": false
+      },
+      "display": {
+        "type": "OLED",
+        "scl": 22,
+        "sda": 21,
+        "rst": -1,
+        "addr": "0x3C"
+      },
+      "memory": {
+        "uart_buffer_size": 6144,
+        "queue_size": 6144,
+        "queue_max_length": 200,
+        "eeprom_size": 512
+      },
+      "ble": null,
+      "models": [
+        {
+          "model": "0xB3",
+          "display_name": "LilyGO LoRa32 v2.1, 433 MHz",
+          "modem": "SX1278",
+          "min_freq": 410000000,
+          "max_freq": 525000000,
+          "default_txp": 17,
+          "firmware_file": "rnode_firmware_lora32v21.zip",
+          "pins": {
+            "cs": 18,
+            "reset": 23,
+            "dio": 26,
+            "tcxo_enable": -1,
+            "np": 4,
+            "led_rx": -1,
+            "led_tx": -1
+          }
+        },
+        {
+          "model": "0xB4",
+          "display_name": "LilyGO LoRa32 v2.1, 868 MHz",
+          "modem": "SX1276",
+          "min_freq": 860000000,
+          "max_freq": 870000000,
+          "default_txp": 17,
+          "firmware_file": "rnode_firmware_lora32v21.zip",
+          "pins": {
+            "cs": 18,
+            "reset": 23,
+            "dio": 26,
+            "tcxo_enable": -1,
+            "np": 4,
+            "led_rx": -1,
+            "led_tx": -1
+          }
+        },
+        {
+          "model": "0xB9",
+          "display_name": "LilyGO LoRa32 v2.1, 915 MHz",
+          "modem": "SX1276",
+          "min_freq": 900000000,
+          "max_freq": 928000000,
+          "default_txp": 17,
+          "firmware_file": "rnode_firmware_lora32v21.zip",
+          "pins": {
+            "cs": 18,
+            "reset": 23,
+            "dio": 26,
+            "tcxo_enable": -1,
+            "np": 4,
+            "led_rx": -1,
+            "led_tx": -1
+          }
+        }
+      ],
+      "_note_product_code": "Upstream uses 0xB2; CE fork renumbers this as 0xB1 internally — verify against CE ROM.h before shipping"
+    },
+    {
+      "name": "Heltec_LoRa32_v3",
+      "display_name": "Heltec LoRa32 v3",
+      "product": "0xC3",
+      "board_id": "BOARD_HELTEC32_V3",
+      "mcu": "MCU_ESP32",
+      "platform": "ESP32",
+      "fqbn": "esp32:esp32:heltec_wifi_lora_32_V3",
+      "upload_protocol": "esptool",
+      "interface_count": 1,
+      "flash_params": {
+        "mode": "dio",
+        "freq": "80m",
+        "size": "8MB",
+        "offset_app": "0x10000",
+        "offset_console": "0x610000"
+      },
+      "capabilities": {
+        "has_display": true,
+        "has_bluetooth": false,
+        "has_ble": true,
+        "has_console": true,
+        "has_pmu": false,
+        "has_np": false,
+        "has_sd": false,
+        "has_tcxo": false,
+        "has_eeprom": true,
+        "has_rf_switch_rx_tx": false,
+        "has_busy": true,
+        "has_input": true,
+        "dio2_as_rf_switch": false,
+        "has_sleep": true
+      },
+      "wakeup": {
+        "pin": "GPIO_NUM_0",
+        "level": 0
+      },
+      "display": {
+        "type": "OLED",
+        "scl": 18,
+        "sda": 17,
+        "rst": 21,
+        "addr": "0x3C"
+      },
+      "memory": {
+        "uart_buffer_size": 6144,
+        "queue_size": 6144,
+        "queue_max_length": 200,
+        "eeprom_size": 512
+      },
+      "ble": {
+        "manufacturer": "Heltec",
+        "model": "Heltec LoRa32 v3"
+      },
+      "models": [
+        {
+          "model": "0xC4",
+          "display_name": "Heltec LoRa32 v3, 868 MHz",
+          "modem": "SX1262",
+          "min_freq": 863000000,
+          "max_freq": 870000000,
+          "default_txp": 21,
+          "firmware_file": "rnode_firmware_heltec32_v3.zip",
+          "pins": {
+            "cs": 8,
+            "reset": 12,
+            "dio": 14,
+            "busy": 13,
+            "rxen": -1,
+            "txen": -1,
+            "tcxo_enable": -1,
+            "led_rx": 35,
+            "led_tx": 35,
+            "disp_sleep": 21
+          }
+        },
+        {
+          "model": "0xC9",
+          "display_name": "Heltec LoRa32 v3, 915 MHz",
+          "modem": "SX1262",
+          "min_freq": 902000000,
+          "max_freq": 928000000,
+          "default_txp": 21,
+          "firmware_file": "rnode_firmware_heltec32_v3.zip",
+          "pins": {
+            "cs": 8,
+            "reset": 12,
+            "dio": 14,
+            "busy": 13,
+            "rxen": -1,
+            "txen": -1,
+            "tcxo_enable": -1,
+            "led_rx": 35,
+            "led_tx": 35,
+            "disp_sleep": 21
+          }
+        }
+      ]
+    },
+    {
+      "name": "LilyGO_T3S3",
+      "display_name": "LilyGO T3S3 v1.0",
+      "product": "0xC5",
+      "board_id": "BOARD_T3S3",
+      "mcu": "MCU_ESP32S3",
+      "platform": "ESP32",
+      "fqbn": "esp32:esp32:esp32s3",
+      "upload_protocol": "esptool",
+      "interface_count": 1,
+      "flash_params": {
+        "mode": "dio",
+        "freq": "80m",
+        "size": "4MB",
+        "offset_app": "0x10000",
+        "offset_console": "0x210000"
+      },
+      "capabilities": {
+        "has_display": true,
+        "has_bluetooth": false,
+        "has_ble": true,
+        "has_console": true,
+        "has_pmu": true,
+        "has_np": false,
+        "has_sd": true,
+        "has_tcxo": false,
+        "has_eeprom": true,
+        "has_rf_switch_rx_tx": false,
+        "has_busy": true,
+        "has_input": true,
+        "dio2_as_rf_switch": false,
+        "has_sleep": true
+      },
+      "wakeup": {
+        "pin": "GPIO_NUM_0",
+        "level": 0
+      },
+      "display": {
+        "type": "OLED",
+        "scl": 17,
+        "sda": 18,
+        "rst": 21,
+        "addr": "0x3C"
+      },
+      "memory": {
+        "uart_buffer_size": 6144,
+        "queue_size": 6144,
+        "queue_max_length": 200,
+        "eeprom_size": 512
+      },
+      "ble": {
+        "manufacturer": "LilyGO",
+        "model": "T3S3"
+      },
+      "models": [
+        {
+          "model": "0xC6",
+          "display_name": "T3S3, SX1262, 868 MHz",
+          "modem": "SX1262",
+          "min_freq": 863000000,
+          "max_freq": 870000000,
+          "default_txp": 21,
+          "firmware_file": "rnode_firmware_t3s3.zip",
+          "pins": {
+            "cs": 7,
+            "reset": 8,
+            "dio": 33,
+            "busy": 34,
+            "rxen": -1,
+            "txen": -1,
+            "tcxo_enable": -1,
+            "led_rx": 37,
+            "led_tx": 37
+          }
+        },
+        {
+          "model": "0xC7",
+          "display_name": "T3S3, SX1262, 915 MHz",
+          "modem": "SX1262",
+          "min_freq": 902000000,
+          "max_freq": 928000000,
+          "default_txp": 21,
+          "firmware_file": "rnode_firmware_t3s3.zip",
+          "pins": {
+            "cs": 7,
+            "reset": 8,
+            "dio": 33,
+            "busy": 34,
+            "rxen": -1,
+            "txen": -1,
+            "tcxo_enable": -1,
+            "led_rx": 37,
+            "led_tx": 37
+          }
+        },
+        {
+          "model": "0xC8",
+          "display_name": "T3S3, SX1276, 433 MHz",
+          "modem": "SX1276",
+          "min_freq": 410000000,
+          "max_freq": 525000000,
+          "default_txp": 17,
+          "firmware_file": "rnode_firmware_t3s3_sx1276.zip",
+          "pins": {
+            "cs": 7,
+            "reset": 8,
+            "dio": 33,
+            "busy": -1,
+            "rxen": -1,
+            "txen": -1,
+            "tcxo_enable": -1,
+            "led_rx": 37,
+            "led_tx": 37
+          }
+        },
+        {
+          "model": "0xAC",
+          "display_name": "T3S3, SX1280, 2.4 GHz (with PA)",
+          "modem": "SX1280",
+          "min_freq": 2400000000,
+          "max_freq": 2500000000,
+          "default_txp": 27,
+          "firmware_file": "rnode_firmware_t3s3_sx1280.zip",
+          "pins": {
+            "cs": 7,
+            "reset": 8,
+            "dio": 9,
+            "busy": 36,
+            "rxen": 21,
+            "txen": 10,
+            "tcxo_enable": -1,
+            "led_rx": 37,
+            "led_tx": 37
+          }
+        }
+      ]
+    },
+    {
+      "name": "Heltec_T114",
+      "display_name": "Heltec T114 / Mesh Node T114",
+      "product": "0xDA",
+      "board_id": "BOARD_HELTEC_T114",
+      "mcu": "MCU_NRF52",
+      "platform": "NRF52",
+      "fqbn": "heltec:nrf52:HeltecMeshNodeT114",
+      "upload_protocol": "nrfutil",
+      "interface_count": 1,
+      "capabilities": {
+        "has_display": true,
+        "has_bluetooth": false,
+        "has_ble": true,
+        "has_console": false,
+        "has_pmu": false,
+        "has_np": true,
+        "has_sd": false,
+        "has_tcxo": false,
+        "has_eeprom": false,
+        "has_rf_switch_rx_tx": true,
+        "has_busy": true,
+        "has_input": true,
+        "dio2_as_rf_switch": true,
+        "has_sleep": false
+      },
+      "display": {
+        "type": "TFT"
+      },
+      "memory": {
+        "uart_buffer_size": 6144,
+        "queue_size": 6144,
+        "queue_max_length": 200,
+        "eeprom_size": 296
+      },
+      "ble": {
+        "manufacturer": "Heltec",
+        "model": "Heltec T114"
+      },
+      "models": [
+        {
+          "model": "0xDB",
+          "display_name": "Heltec T114, 868 MHz",
+          "modem": "SX1262",
+          "min_freq": 863000000,
+          "max_freq": 870000000,
+          "default_txp": 22,
+          "firmware_file": "rnode_firmware_heltec_t114.zip",
+          "pins": {
+            "cs": 44,
+            "reset": 42,
+            "dio": 45,
+            "busy": 46,
+            "rxen": 37,
+            "txen": 38,
+            "sclk": 43,
+            "mosi": 41,
+            "miso": 40,
+            "tcxo_enable": -1,
+            "np": 39,
+            "led_rx": -1,
+            "led_tx": -1
+          }
+        },
+        {
+          "model": "0xDC",
+          "display_name": "Heltec T114, 915 MHz",
+          "modem": "SX1262",
+          "min_freq": 900000000,
+          "max_freq": 928000000,
+          "default_txp": 22,
+          "firmware_file": "rnode_firmware_heltec_t114.zip",
+          "pins": {
+            "cs": 44,
+            "reset": 42,
+            "dio": 45,
+            "busy": 46,
+            "rxen": 37,
+            "txen": 38,
+            "sclk": 43,
+            "mosi": 41,
+            "miso": 40,
+            "tcxo_enable": -1,
+            "np": 39,
+            "led_rx": -1,
+            "led_tx": -1
+          }
+        }
+      ]
+    },
+    {
+      "name": "Seeed_XIAO_ESP32S3",
+      "display_name": "Seeed Studio XIAO ESP32S3 (Wio-SX1262)",
+      "product": "0xEB",
+      "board_id": "BOARD_XIAO_ESP32S3",
+      "mcu": "MCU_ESP32S3",
+      "platform": "ESP32",
+      "fqbn": "esp32:esp32:XIAO_ESP32S3",
+      "upload_protocol": "esptool",
+      "interface_count": 1,
+      "flash_params": {
+        "mode": "dio",
+        "freq": "80m",
+        "size": "8MB",
+        "offset_app": "0x10000",
+        "offset_console": "0x610000"
+      },
+      "capabilities": {
+        "has_display": true,
+        "has_bluetooth": false,
+        "has_ble": true,
+        "has_console": false,
+        "has_pmu": false,
+        "has_np": false,
+        "has_sd": false,
+        "has_tcxo": true,
+        "has_eeprom": true,
+        "has_rf_switch_rx_tx": false,
+        "has_busy": true,
+        "has_input": true,
+        "dio2_as_rf_switch": true,
+        "has_sleep": true
+      },
+      "wakeup": {
+        "pin": "GPIO_NUM_21",
+        "level": 0
+      },
+      "display": {
+        "type": "OLED",
+        "scl": 6,
+        "sda": 5,
+        "rst": -1,
+        "addr": "0x3C"
+      },
+      "memory": {
+        "uart_buffer_size": 6144,
+        "queue_size": 6144,
+        "queue_max_length": 200,
+        "eeprom_size": 512
+      },
+      "ble": {
+        "manufacturer": "Seeed Studio",
+        "model": "XIAO ESP32S3"
+      },
+      "models": [
+        {
+          "model": "0xDD",
+          "display_name": "XIAO ESP32S3, SX1262, 868 MHz",
+          "modem": "SX1262",
+          "min_freq": 863000000,
+          "max_freq": 928000000,
+          "default_txp": 22,
+          "firmware_file": "rnode_firmware_xiao_esp32s3.zip",
+          "pins": {
+            "cs": 41,
+            "reset": 42,
+            "dio": 39,
+            "busy": 40,
+            "rxen": -1,
+            "txen": -1,
+            "sclk": 7,
+            "mosi": 9,
+            "miso": 8,
+            "tcxo_enable": -1,
+            "led_rx": -1,
+            "led_tx": -1,
+            "np": -1
+          }
+        }
+      ]
+    }
+  ]
+}
