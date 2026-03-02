@@ -30,13 +30,14 @@
         "has_busy": true,
         "has_input": true,
         "dio2_as_rf_switch": true,
-        "has_sleep": false
+        "has_sleep": false,
+        "has_gps": false
       },
       "display": {
         "type": "OLED",
-        "scl": 14,
-        "sda": 13,
-        "rst": -1,
+        "pin_scl": 14,
+        "pin_sda": 13,
+        "pin_rst": -1,
         "addr": "0x3C"
       },
       "memory": {
@@ -59,19 +60,19 @@
           "default_txp": 22,
           "firmware_file": "rnode_firmware_rak4631.zip",
           "pins": {
-            "cs": 42,
-            "reset": 38,
-            "dio": 47,
-            "busy": 46,
-            "rxen": 37,
-            "txen": 39,
-            "sclk": 43,
-            "mosi": 44,
-            "miso": 45,
-            "tcxo_enable": -1,
-            "led_rx": -1,
-            "led_tx": -1,
-            "np": -1
+            "pin_cs": 42,
+            "pin_reset": 38,
+            "pin_dio": 47,
+            "pin_busy": 46,
+            "pin_rxen": 37,
+            "pin_txen": 39,
+            "pin_sclk": 43,
+            "pin_mosi": 44,
+            "pin_miso": 45,
+            "pin_tcxo_enable": -1,
+            "pin_led_rx": -1,
+            "pin_led_tx": -1,
+            "pin_np": -1
           }
         },
         {
@@ -83,22 +84,27 @@
           "default_txp": 22,
           "firmware_file": "rnode_firmware_rak4631.zip",
           "pins": {
-            "cs": 42,
-            "reset": 38,
-            "dio": 47,
-            "busy": 46,
-            "rxen": 37,
-            "txen": 39,
-            "sclk": 43,
-            "mosi": 44,
-            "miso": 45,
-            "tcxo_enable": -1,
-            "led_rx": -1,
-            "led_tx": -1,
-            "np": -1
+            "pin_cs": 42,
+            "pin_reset": 38,
+            "pin_dio": 47,
+            "pin_busy": 46,
+            "pin_rxen": 37,
+            "pin_txen": 39,
+            "pin_sclk": 43,
+            "pin_mosi": 44,
+            "pin_miso": 45,
+            "pin_tcxo_enable": -1,
+            "pin_led_rx": -1,
+            "pin_led_tx": -1,
+            "pin_np": -1
           }
         }
-      ]
+      ],
+      "gps": {
+        "baud": 9600,
+        "pin_rx": -1,
+        "pin_tx": -1
+      }
     },
     {
       "name": "LilyGO_T_Echo",
@@ -124,7 +130,8 @@
         "has_busy": true,
         "has_input": true,
         "dio2_as_rf_switch": true,
-        "has_sleep": false
+        "has_sleep": false,
+        "has_gps": false
       },
       "display": {
         "type": "EINK_BW",
@@ -150,19 +157,19 @@
           "default_txp": 22,
           "firmware_file": "rnode_firmware_techo.zip",
           "pins": {
-            "cs": 36,
-            "reset": 31,
-            "dio": 28,
-            "busy": 32,
-            "rxen": -1,
-            "txen": -1,
-            "sclk": 34,
-            "mosi": 33,
-            "miso": 35,
-            "tcxo_enable": -1,
-            "led_rx": -1,
-            "led_tx": -1,
-            "np": -1
+            "pin_cs": 36,
+            "pin_reset": 31,
+            "pin_dio": 28,
+            "pin_busy": 32,
+            "pin_rxen": -1,
+            "pin_txen": -1,
+            "pin_sclk": 34,
+            "pin_mosi": 33,
+            "pin_miso": 35,
+            "pin_tcxo_enable": -1,
+            "pin_led_rx": -1,
+            "pin_led_tx": -1,
+            "pin_np": -1
           }
         },
         {
@@ -174,22 +181,27 @@
           "default_txp": 22,
           "firmware_file": "rnode_firmware_techo.zip",
           "pins": {
-            "cs": 36,
-            "reset": 31,
-            "dio": 28,
-            "busy": 32,
-            "rxen": -1,
-            "txen": -1,
-            "sclk": 34,
-            "mosi": 33,
-            "miso": 35,
-            "tcxo_enable": -1,
-            "led_rx": -1,
-            "led_tx": -1,
-            "np": -1
+            "pin_cs": 36,
+            "pin_reset": 31,
+            "pin_dio": 28,
+            "pin_busy": 32,
+            "pin_rxen": -1,
+            "pin_txen": -1,
+            "pin_sclk": 34,
+            "pin_mosi": 33,
+            "pin_miso": 35,
+            "pin_tcxo_enable": -1,
+            "pin_led_rx": -1,
+            "pin_led_tx": -1,
+            "pin_np": -1
           }
         }
-      ]
+      ],
+      "gps": {
+        "baud": 9600,
+        "pin_rx": -1,
+        "pin_tx": -1
+      }
     },
     {
       "name": "LilyGO_LoRa32_v21",
@@ -222,13 +234,14 @@
         "has_busy": false,
         "has_input": false,
         "dio2_as_rf_switch": false,
-        "has_sleep": false
+        "has_sleep": false,
+        "has_gps": false
       },
       "display": {
         "type": "OLED",
-        "scl": 22,
-        "sda": 21,
-        "rst": -1,
+        "pin_scl": 22,
+        "pin_sda": 21,
+        "pin_rst": -1,
         "addr": "0x3C"
       },
       "memory": {
@@ -248,13 +261,13 @@
           "default_txp": 17,
           "firmware_file": "rnode_firmware_lora32v21.zip",
           "pins": {
-            "cs": 18,
-            "reset": 23,
-            "dio": 26,
-            "tcxo_enable": -1,
-            "np": 4,
-            "led_rx": -1,
-            "led_tx": -1
+            "pin_cs": 18,
+            "pin_reset": 23,
+            "pin_dio": 26,
+            "pin_tcxo_enable": -1,
+            "pin_np": 4,
+            "pin_led_rx": -1,
+            "pin_led_tx": -1
           }
         },
         {
@@ -266,13 +279,13 @@
           "default_txp": 17,
           "firmware_file": "rnode_firmware_lora32v21.zip",
           "pins": {
-            "cs": 18,
-            "reset": 23,
-            "dio": 26,
-            "tcxo_enable": -1,
-            "np": 4,
-            "led_rx": -1,
-            "led_tx": -1
+            "pin_cs": 18,
+            "pin_reset": 23,
+            "pin_dio": 26,
+            "pin_tcxo_enable": -1,
+            "pin_np": 4,
+            "pin_led_rx": -1,
+            "pin_led_tx": -1
           }
         },
         {
@@ -284,17 +297,22 @@
           "default_txp": 17,
           "firmware_file": "rnode_firmware_lora32v21.zip",
           "pins": {
-            "cs": 18,
-            "reset": 23,
-            "dio": 26,
-            "tcxo_enable": -1,
-            "np": 4,
-            "led_rx": -1,
-            "led_tx": -1
+            "pin_cs": 18,
+            "pin_reset": 23,
+            "pin_dio": 26,
+            "pin_tcxo_enable": -1,
+            "pin_np": 4,
+            "pin_led_rx": -1,
+            "pin_led_tx": -1
           }
         }
       ],
-      "_note_product_code": "Upstream uses 0xB2; CE fork renumbers this as 0xB1 internally — verify against CE ROM.h before shipping"
+      "_note_product_code": "Upstream uses 0xB2; CE fork renumbers this as 0xB1 internally \u2014 verify against CE ROM.h before shipping",
+      "gps": {
+        "baud": 9600,
+        "pin_rx": -1,
+        "pin_tx": -1
+      }
     },
     {
       "name": "Heltec_LoRa32_v3",
@@ -327,7 +345,8 @@
         "has_busy": true,
         "has_input": true,
         "dio2_as_rf_switch": false,
-        "has_sleep": true
+        "has_sleep": true,
+        "has_gps": false
       },
       "wakeup": {
         "pin": "GPIO_NUM_0",
@@ -335,9 +354,9 @@
       },
       "display": {
         "type": "OLED",
-        "scl": 18,
-        "sda": 17,
-        "rst": 21,
+        "pin_scl": 18,
+        "pin_sda": 17,
+        "pin_rst": 21,
         "addr": "0x3C"
       },
       "memory": {
@@ -360,16 +379,16 @@
           "default_txp": 21,
           "firmware_file": "rnode_firmware_heltec32_v3.zip",
           "pins": {
-            "cs": 8,
-            "reset": 12,
-            "dio": 14,
-            "busy": 13,
-            "rxen": -1,
-            "txen": -1,
-            "tcxo_enable": -1,
-            "led_rx": 35,
-            "led_tx": 35,
-            "disp_sleep": 21
+            "pin_cs": 8,
+            "pin_reset": 12,
+            "pin_dio": 14,
+            "pin_busy": 13,
+            "pin_rxen": -1,
+            "pin_txen": -1,
+            "pin_tcxo_enable": -1,
+            "pin_led_rx": 35,
+            "pin_led_tx": 35,
+            "pin_disp_sleep": 21
           }
         },
         {
@@ -381,19 +400,24 @@
           "default_txp": 21,
           "firmware_file": "rnode_firmware_heltec32_v3.zip",
           "pins": {
-            "cs": 8,
-            "reset": 12,
-            "dio": 14,
-            "busy": 13,
-            "rxen": -1,
-            "txen": -1,
-            "tcxo_enable": -1,
-            "led_rx": 35,
-            "led_tx": 35,
-            "disp_sleep": 21
+            "pin_cs": 8,
+            "pin_reset": 12,
+            "pin_dio": 14,
+            "pin_busy": 13,
+            "pin_rxen": -1,
+            "pin_txen": -1,
+            "pin_tcxo_enable": -1,
+            "pin_led_rx": 35,
+            "pin_led_tx": 35,
+            "pin_disp_sleep": 21
           }
         }
-      ]
+      ],
+      "gps": {
+        "baud": 9600,
+        "pin_rx": -1,
+        "pin_tx": -1
+      }
     },
     {
       "name": "LilyGO_T3S3",
@@ -426,7 +450,8 @@
         "has_busy": true,
         "has_input": true,
         "dio2_as_rf_switch": false,
-        "has_sleep": true
+        "has_sleep": true,
+        "has_gps": false
       },
       "wakeup": {
         "pin": "GPIO_NUM_0",
@@ -434,9 +459,9 @@
       },
       "display": {
         "type": "OLED",
-        "scl": 17,
-        "sda": 18,
-        "rst": 21,
+        "pin_scl": 17,
+        "pin_sda": 18,
+        "pin_rst": 21,
         "addr": "0x3C"
       },
       "memory": {
@@ -459,15 +484,15 @@
           "default_txp": 21,
           "firmware_file": "rnode_firmware_t3s3.zip",
           "pins": {
-            "cs": 7,
-            "reset": 8,
-            "dio": 33,
-            "busy": 34,
-            "rxen": -1,
-            "txen": -1,
-            "tcxo_enable": -1,
-            "led_rx": 37,
-            "led_tx": 37
+            "pin_cs": 7,
+            "pin_reset": 8,
+            "pin_dio": 33,
+            "pin_busy": 34,
+            "pin_rxen": -1,
+            "pin_txen": -1,
+            "pin_tcxo_enable": -1,
+            "pin_led_rx": 37,
+            "pin_led_tx": 37
           }
         },
         {
@@ -479,15 +504,15 @@
           "default_txp": 21,
           "firmware_file": "rnode_firmware_t3s3.zip",
           "pins": {
-            "cs": 7,
-            "reset": 8,
-            "dio": 33,
-            "busy": 34,
-            "rxen": -1,
-            "txen": -1,
-            "tcxo_enable": -1,
-            "led_rx": 37,
-            "led_tx": 37
+            "pin_cs": 7,
+            "pin_reset": 8,
+            "pin_dio": 33,
+            "pin_busy": 34,
+            "pin_rxen": -1,
+            "pin_txen": -1,
+            "pin_tcxo_enable": -1,
+            "pin_led_rx": 37,
+            "pin_led_tx": 37
           }
         },
         {
@@ -499,15 +524,15 @@
           "default_txp": 17,
           "firmware_file": "rnode_firmware_t3s3_sx1276.zip",
           "pins": {
-            "cs": 7,
-            "reset": 8,
-            "dio": 33,
-            "busy": -1,
-            "rxen": -1,
-            "txen": -1,
-            "tcxo_enable": -1,
-            "led_rx": 37,
-            "led_tx": 37
+            "pin_cs": 7,
+            "pin_reset": 8,
+            "pin_dio": 33,
+            "pin_busy": -1,
+            "pin_rxen": -1,
+            "pin_txen": -1,
+            "pin_tcxo_enable": -1,
+            "pin_led_rx": 37,
+            "pin_led_tx": 37
           }
         },
         {
@@ -519,18 +544,23 @@
           "default_txp": 27,
           "firmware_file": "rnode_firmware_t3s3_sx1280.zip",
           "pins": {
-            "cs": 7,
-            "reset": 8,
-            "dio": 9,
-            "busy": 36,
-            "rxen": 21,
-            "txen": 10,
-            "tcxo_enable": -1,
-            "led_rx": 37,
-            "led_tx": 37
+            "pin_cs": 7,
+            "pin_reset": 8,
+            "pin_dio": 9,
+            "pin_busy": 36,
+            "pin_rxen": 21,
+            "pin_txen": 10,
+            "pin_tcxo_enable": -1,
+            "pin_led_rx": 37,
+            "pin_led_tx": 37
           }
         }
-      ]
+      ],
+      "gps": {
+        "baud": 9600,
+        "pin_rx": -1,
+        "pin_tx": -1
+      }
     },
     {
       "name": "Heltec_T114",
@@ -556,7 +586,8 @@
         "has_busy": true,
         "has_input": true,
         "dio2_as_rf_switch": true,
-        "has_sleep": false
+        "has_sleep": false,
+        "has_gps": false
       },
       "display": {
         "type": "TFT"
@@ -581,19 +612,19 @@
           "default_txp": 22,
           "firmware_file": "rnode_firmware_heltec_t114.zip",
           "pins": {
-            "cs": 44,
-            "reset": 42,
-            "dio": 45,
-            "busy": 46,
-            "rxen": 37,
-            "txen": 38,
-            "sclk": 43,
-            "mosi": 41,
-            "miso": 40,
-            "tcxo_enable": -1,
-            "np": 39,
-            "led_rx": -1,
-            "led_tx": -1
+            "pin_cs": 44,
+            "pin_reset": 42,
+            "pin_dio": 45,
+            "pin_busy": 46,
+            "pin_rxen": 37,
+            "pin_txen": 38,
+            "pin_sclk": 43,
+            "pin_mosi": 41,
+            "pin_miso": 40,
+            "pin_tcxo_enable": -1,
+            "pin_np": 39,
+            "pin_led_rx": -1,
+            "pin_led_tx": -1
           }
         },
         {
@@ -605,22 +636,27 @@
           "default_txp": 22,
           "firmware_file": "rnode_firmware_heltec_t114.zip",
           "pins": {
-            "cs": 44,
-            "reset": 42,
-            "dio": 45,
-            "busy": 46,
-            "rxen": 37,
-            "txen": 38,
-            "sclk": 43,
-            "mosi": 41,
-            "miso": 40,
-            "tcxo_enable": -1,
-            "np": 39,
-            "led_rx": -1,
-            "led_tx": -1
+            "pin_cs": 44,
+            "pin_reset": 42,
+            "pin_dio": 45,
+            "pin_busy": 46,
+            "pin_rxen": 37,
+            "pin_txen": 38,
+            "pin_sclk": 43,
+            "pin_mosi": 41,
+            "pin_miso": 40,
+            "pin_tcxo_enable": -1,
+            "pin_np": 39,
+            "pin_led_rx": -1,
+            "pin_led_tx": -1
           }
         }
-      ]
+      ],
+      "gps": {
+        "baud": 9600,
+        "pin_rx": -1,
+        "pin_tx": -1
+      }
     },
     {
       "name": "Seeed_XIAO_ESP32S3",
@@ -653,7 +689,8 @@
         "has_busy": true,
         "has_input": true,
         "dio2_as_rf_switch": true,
-        "has_sleep": true
+        "has_sleep": true,
+        "has_gps": false
       },
       "wakeup": {
         "pin": "GPIO_NUM_21",
@@ -661,9 +698,9 @@
       },
       "display": {
         "type": "OLED",
-        "scl": 6,
-        "sda": 5,
-        "rst": -1,
+        "pin_scl": 6,
+        "pin_sda": 5,
+        "pin_rst": -1,
         "addr": "0x3C"
       },
       "memory": {
@@ -686,22 +723,27 @@
           "default_txp": 22,
           "firmware_file": "rnode_firmware_xiao_esp32s3.zip",
           "pins": {
-            "cs": 41,
-            "reset": 42,
-            "dio": 39,
-            "busy": 40,
-            "rxen": -1,
-            "txen": -1,
-            "sclk": 7,
-            "mosi": 9,
-            "miso": 8,
-            "tcxo_enable": -1,
-            "led_rx": -1,
-            "led_tx": -1,
-            "np": -1
+            "pin_cs": 41,
+            "pin_reset": 42,
+            "pin_dio": 39,
+            "pin_busy": 40,
+            "pin_rxen": -1,
+            "pin_txen": -1,
+            "pin_sclk": 7,
+            "pin_mosi": 9,
+            "pin_miso": 8,
+            "pin_tcxo_enable": -1,
+            "pin_led_rx": -1,
+            "pin_led_tx": -1,
+            "pin_np": -1
           }
         }
-      ]
+      ],
+      "gps": {
+        "baud": 9600,
+        "pin_rx": -1,
+        "pin_tx": -1
+      }
     }
   ]
 }
