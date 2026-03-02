@@ -22,8 +22,23 @@ ifeq "$(V)" "1"
 VFLAG =-v
 endif
 
+CXXFLAGS += -Wfatal-errors
+
 COMMON_BUILD_FLAGS =  $(VFLAG) -e --build-property "build.partitions=no_ota" --build-property "upload.maximum_size=2097152"
 COMMON_ESP_UPLOAD_FLAGS = $(VFLAG) --chip esp32 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x210000
+
+# Run the interactive configuration workflow
+menuconfig:
+	@python3 menuconfig.py
+
+# Compile for the board defined in boards_target.h
+firmware-board:
+	@if [ ! -f boards_target.h ]; then \
+		echo "Error: boards_target.h not found. Run 'make menuconfig' first."; \
+		exit 1; \
+	fi
+	$(eval FQBN := $(shell grep "TARGET_FQBN" boards_target.h | cut -d'"' -f2))
+	arduino-cli compile --fqbn $(FQBN) $(COMMON_BUILD_FLAGS) --build-property "compiler.cpp.extra_flags=\"-DUSING_BOARDS_TARGET_H\""
 
 all: release
 
