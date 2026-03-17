@@ -859,13 +859,24 @@
       #define IS_ESP32S3 true
       #define HAS_DISPLAY false
       #define DISPLAY TFT // to be tested...
-      #define HAS_CONSOLE false
+      #define HAS_CONSOLE true
       #define HAS_BLUETOOTH false
       #define HAS_BLE true
       #define HAS_PMU true
       #define HAS_NP false
       #define HAS_SD false
       #define HAS_EEPROM true
+
+      #define HAS_GPS true
+      #define GPS_BAUD_RATE 9600
+      #define PIN_GPS_RX 5            // Verify pin for your T-Deck hardware variant
+      #define PIN_GPS_TX 6            // Verify pin for your T-Deck hardware variant
+
+      #define I2C_SDA 18
+      #define I2C_SCL 8
+
+      #define HAS_KEYBOARD true
+      #define KEYBOARD_ADDR 0x55      // T-Deck QWERTY keyboard I2C address
 
       #define HAS_INPUT true
       #define HAS_SLEEP true
