@@ -11,7 +11,7 @@ You'll be working with **two synchronized repositories**:
 1. **RNode_Firmware_CE** - Firmware implementation
 2. **Reticulum** - Control utilities (rnodeconf)
 
-Both are on branch: `claude/update-rnodeconf-firmware-KmoUs`
+Both are on branch: `claude/review-repo-updates-8VfF2`
 
 ## Quick Clone & Setup
 
@@ -19,12 +19,12 @@ Both are on branch: `claude/update-rnodeconf-firmware-KmoUs`
 # Clone both repos
 git clone https://github.com/jhjessup/RNode_Firmware_CE.git
 cd RNode_Firmware_CE
-git checkout claude/update-rnodeconf-firmware-KmoUs
+git checkout claude/review-repo-updates-8VfF2
 
 cd ..
 git clone https://github.com/markqvist/Reticulum.git
 cd Reticulum
-git checkout claude/update-rnodeconf-firmware-KmoUs
+git checkout claude/review-repo-updates-8VfF2
 pip install -e .
 
 # Verify rnodeconf is available
@@ -60,8 +60,8 @@ git clone https://github.com/jhjessup/RNode_Firmware_CE.git
 git clone https://github.com/markqvist/Reticulum.git
 
 # Checkout branches
-cd RNode_Firmware_CE && git checkout claude/update-rnodeconf-firmware-KmoUs
-cd ../Reticulum && git checkout claude/update-rnodeconf-firmware-KmoUs && pip install -e .
+cd RNode_Firmware_CE && git checkout claude/review-repo-updates-8VfF2
+cd ../Reticulum && git checkout claude/review-repo-updates-8VfF2 && pip install -e .
 
 # Read integration docs
 cat RNode_Firmware_CE/FIRMWARE_INTEGRATION_STATUS.md
@@ -99,7 +99,7 @@ cat TESTING_AND_VALIDATION.md         # How to validate changes
 # Make changes, test, commit
 git add .
 git commit -m "Description of changes"
-git push -u origin claude/update-rnodeconf-firmware-KmoUs
+git push -u origin claude/review-repo-updates-8VfF2
 ```
 
 ## Testing Workflow
