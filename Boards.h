@@ -16,6 +16,10 @@
 #include "Interfaces.h"
 #include "ROM.h"
 
+#ifdef USING_BOARDS_TARGET_H
+  #include "boards_target.h"
+#endif
+
 #ifndef BOARDS_H
   #define BOARDS_H
 

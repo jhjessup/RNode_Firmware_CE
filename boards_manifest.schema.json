@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RNode Boards Manifest Schema",
+  "description": "Schema for RNode Firmware CE board configuration and automated build manifest.",
+  "type": "object",
+  "properties": {
+    "manifest_version": { "type": "string" },
+    "repo_name": { "type": "string" },
+    "repo_url": { "type": "string", "format": "uri" },
+    "firmware_base_url": { "type": "string" },
+    "boards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "product", "board_id", "mcu", "platform", "fqbn", "models"],
+        "properties": {
+          "name": { "type": "string" },
+          "display_name": { "type": "string" },
+          "product": { "type": "string", "pattern": "^0x[0-9A-Fa-f]+$" },
+          "board_id": { "type": "string" },
+          "mcu": { "type": "string" },
+          "platform": { "type": "string" },
+          "fqbn": { "type": "string" },
+          "upload_protocol": { "type": "string" },
+          "capabilities": {
+            "type": "object",
+            "properties": {
+              "has_display": { "type": "boolean" },
+              "has_gps": { "type": "boolean" },
+              "has_tcxo": { "type": "boolean" },
+              "has_bluetooth": { "type": "boolean" },
+              "has_ble": { "type": "boolean" },
+              "has_eeprom": { "type": "boolean" },
+              "has_rf_switch_rx_tx": { "type": "boolean" },
+              "dio2_as_rf_switch": { "type": "boolean" }
+            }
+          },
+          "display": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string" },
+              "pin_scl": { "type": "integer" },
+              "pin_sda": { "type": "integer" },
+              "pin_rst": { "type": "integer" },
+              "pin_disp_sleep": { "type": "integer" },
+              "addr": { "type": "string" },
+              "scale": { "type": "number" },
+              "driver": { "type": "string" }
+            }
+          },
+          "gps": {
+            "type": "object",
+            "properties": {
+              "baud": { "type": "integer", "default": 9600 },
+              "pin_rx": { "type": "integer" },
+              "pin_tx": { "type": "integer" }
+            }
+          },
+          "memory": {
+            "type": "object",
+            "properties": {
+              "uart_buffer_size": { "type": "integer" },
+              "queue_size": { "type": "integer" },
+              "queue_max_length": { "type": "integer" },
+              "eeprom_size": { "type": "integer" }
+            }
+          },
+          "models": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["model", "display_name"],
+              "properties": {
+                "model": { "type": "string", "pattern": "^0x[0-9A-Fa-f]+$" },
+                "display_name": { "type": "string" },
+                "modem": { "type": "string" },
+                "ocp_tuned": { "type": "string" },
+                "pins": {
+                  "type": "object",
+                  "patternProperties": {
+                    "^pin_.*$": { "type": "integer" }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

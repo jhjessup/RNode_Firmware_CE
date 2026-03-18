@@ -64,6 +64,8 @@
 
 #define MODEM_TIMEOUT_MULT 1.5
 
+extern uint8_t model;
+
 // Status flags
 const uint8_t SIG_DETECT = 0x01;
 const uint8_t SIG_SYNCED = 0x02;
@@ -229,37 +231,36 @@ public:
         updateCSMAParameters();
         kiss_indicate_channel_stats(_index);
     };
-    float getAirtime(uint16_t written) { 
-        float lora_symbols = 0;
-        float packet_cost_ms = 0.0;
+  float getAirtime(uint16_t written) {
+    float lora_symbols = 0;
+    float packet_cost_ms = 0.0;
 
-        if (interfaces[_index] == SX1276 || interfaces[_index] == SX1278) { 
-            lora_symbols += (8*written + PHY_CRC_LORA_BITS - 4*_sf + 8 + PHY_HEADER_LORA_SYMBOLS);
-            lora_symbols /=                          4*(_sf-2*_ldro);
-            lora_symbols *= getCodingRate4();
-            lora_symbols += _preambleLength + 0.25 + 8;
-            packet_cost_ms += lora_symbols * _lora_symbol_time_ms;
-        }
-        else if (interfaces[_index] == SX1262 || interfaces[_index] == SX1280) {
-            if (_sf < 7) {
-                lora_symbols += (8*written + PHY_CRC_LORA_BITS - 4*_sf + PHY_HEADER_LORA_SYMBOLS);
-                lora_symbols /=                              4*_sf;
-                lora_symbols *= getCodingRate4();
-                lora_symbols += _preambleLength + 2.25 + 8;
-                packet_cost_ms += lora_symbols * _lora_symbol_time_ms;
-
-            } else {
-                lora_symbols += (8*written + PHY_CRC_LORA_BITS - 4*_sf + 8 + PHY_HEADER_LORA_SYMBOLS);
-                lora_symbols /=                         4*(_sf-2*_ldro);
-                lora_symbols *= getCodingRate4();
-                lora_symbols += _preambleLength + 0.25 + 8;
-                packet_cost_ms += lora_symbols * _lora_symbol_time_ms;
-            }
-        }
-        _last_packet_cost = packet_cost_ms;
-        return packet_cost_ms;
+    if (model == SX1276 || model == SX1278) {
+      lora_symbols += (8*written + PHY_CRC_LORA_BITS - 4*_sf + 8 + PHY_HEADER_LORA_SYMBOLS);
+      lora_symbols /=                          4*(_sf-2*_ldro);
+      lora_symbols *= getCodingRate4();
+      lora_symbols += _preambleLength + 0.25 + 8;
+      packet_cost_ms += lora_symbols * _lora_symbol_time_ms;
     }
-    void addAirtime() {
+    else if (model == SX1262 || model == SX1280) {
+      if (_sf < 7) {
+          lora_symbols += 8 * written + PHY_CRC_LORA_BITS - 4 * _sf + PHY_HEADER_LORA_SYMBOLS;
+        lora_symbols /=                              4*_sf;
+        lora_symbols *= getCodingRate4();
+        lora_symbols += _preambleLength + 2.25 + 8;
+        packet_cost_ms += lora_symbols * _lora_symbol_time_ms;
+      } else {
+        lora_symbols += (8*written + PHY_CRC_LORA_BITS - 4*_sf + 8 + PHY_HEADER_LORA_SYMBOLS);
+        lora_symbols /=                         4*(_sf-2*_ldro);
+        lora_symbols *= getCodingRate4();
+        lora_symbols += _preambleLength + 0.25 + 8;
+        packet_cost_ms += lora_symbols * _lora_symbol_time_ms;
+      }
+    }
+    _last_packet_cost = packet_cost_ms;
+    return packet_cost_ms;
+  }
+  void addAirtime() {
         uint16_t cb = current_airtime_bin();
         uint16_t nb = cb+1; if (nb == AIRTIME_BINS) { nb = 0; }
         _airtime_bins[cb] += _last_packet_cost;

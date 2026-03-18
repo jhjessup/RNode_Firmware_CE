@@ -22,8 +22,23 @@ ifeq "$(V)" "1"
 VFLAG =-v
 endif
 
+CXXFLAGS += -Wfatal-errors
+
 COMMON_BUILD_FLAGS =  $(VFLAG) -e --build-property "build.partitions=no_ota" --build-property "upload.maximum_size=2097152"
 COMMON_ESP_UPLOAD_FLAGS = $(VFLAG) --chip esp32 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x210000
+
+# Run the interactive configuration workflow
+menuconfig:
+	@python3 menuconfig.py
+
+# Compile for the board defined in boards_target.h
+firmware-board:
+	@if [ ! -f boards_target.h ]; then \
+		echo "Error: boards_target.h not found. Run 'make menuconfig' first."; \
+		exit 1; \
+	fi
+	$(eval FQBN := $(shell grep "TARGET_FQBN" boards_target.h | cut -d'"' -f2))
+	arduino-cli compile --fqbn $(FQBN) $(COMMON_BUILD_FLAGS) --build-property "compiler.cpp.extra_flags=\"-DUSING_BOARDS_TARGET_H\""
 
 all: release
 
@@ -86,8 +101,9 @@ firmware-tbeam_sx1262: check_bt_buffers
 firmware-techo:
 	arduino-cli compile --fqbn adafruit:nrf52:pca10056 $(COMMON_BUILD_FLAGS) --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x44\""
 
-firmware-t3s3:
-	arduino-cli compile --fqbn "esp32:esp32:esp32s3:CDCOnBoot=cdc" $(COMMON_BUILD_FLAGS) --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x42\" \"-DBOARD_VARIANT=0xAB\""
+# BROKEN
+#firmware-t3s3:
+#	arduino-cli compile --fqbn "esp32:esp32:esp32s3:CDCOnBoot=cdc" $(COMMON_BUILD_FLAGS) --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x42\" \"-DBOARD_VARIANT=0xAB\""
 
 firmware-t3s3_sx126x:
 	arduino-cli compile --fqbn "esp32:esp32:esp32s3:CDCOnBoot=cdc" $(COMMON_BUILD_FLAGS) --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x42\" \"-DBOARD_VARIANT=0xA1\""
@@ -152,11 +168,13 @@ firmware-rak4631_sx1280:
 firmware-opencom-xl:
 	arduino-cli compile --fqbn rakwireless:nrf52:WisCoreRAK4631Board $(COMMON_BUILD_FLAGS) --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x52\" \"-DBOARD_VARIANT=0x21\""
 
-firmware-heltec_t114:
-	arduino-cli compile --log --fqbn Heltec_nRF52:Heltec_nRF52:HT-n5262 -e --build-property "build.partitions=no_ota" --build-property "upload.maximum_size=2097152" --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x3C\""
+# BROKEN
+#firmware-heltec_t114:
+#	arduino-cli compile --log --fqbn Heltec_nRF52:Heltec_nRF52:HT-n5262 -e --build-property "build.partitions=no_ota" --build-property "upload.maximum_size=2097152" --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x3C\""
 
-firmware-heltec_t114_gps:
-	arduino-cli compile --log --fqbn Heltec_nRF52:Heltec_nRF52:HT-n5262 -e --build-property "build.partitions=no_ota" --build-property "upload.maximum_size=2097152" --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x3C\" \"-DBOARD_VARIANT=0xCB\""
+# BROKEN
+#firmware-heltec_t114_gps:
+#	arduino-cli compile --log --fqbn Heltec_nRF52:Heltec_nRF52:HT-n5262 -e --build-property "build.partitions=no_ota" --build-property "upload.maximum_size=2097152" --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x3C\" \"-DBOARD_VARIANT=0xCB\""
 
 upload-tbeam:
 	arduino-cli upload -p $(or $(port), /dev/ttyACM0) --fqbn esp32:esp32:t-beam
