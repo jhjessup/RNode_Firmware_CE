@@ -36,7 +36,6 @@ jobs:
           - featheresp32
           - genericesp32
           - e22_esp32
-          - t3s3
           - t3s3_sx126x
           - t3s3_sx1280_pa
 
@@ -92,8 +91,6 @@ jobs:
           - rak4631
           - rak4631_sx1280
           - opencom-xl
-          - heltec_t114
-          - heltec_t114_gps
 
     steps:
       - name: Checkout repository
