@@ -233,6 +233,10 @@ void setup() {
   gps_s.begin(GPS_BAUD_RATE);
   #endif
 
+  #if HAS_KEYBOARD
+  keyboard_init();
+  #endif
+
   // add call to init_channel_stats here? \todo
 
   // Create and configure interface objects
@@ -1610,6 +1614,10 @@ void loop() {
 
   #if HAS_INPUT
     input_read();
+  #endif
+
+  #if HAS_KEYBOARD
+    keyboard_read();
   #endif
 
   #if HAS_GPS

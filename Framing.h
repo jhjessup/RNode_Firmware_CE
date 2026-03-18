@@ -116,6 +116,10 @@
   #define GPS_CMD_LAT     0x00
   #define GPS_CMD_LNG     0x01
 
+  #define CMD_KEYBOARD    0xA1
+
+  #define KEYBOARD_CMD_KEY 0x00
+
   // Serial logging
   #define LOG_MSG         0x2F
 

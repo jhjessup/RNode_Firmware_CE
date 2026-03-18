@@ -66,6 +66,10 @@ uint8_t eeprom_read(uint32_t mapped_addr);
     #include "src/misc/gps.h"
 #endif
 
+#if HAS_KEYBOARD
+    #include "Keyboard.h"
+#endif
+
 #if MCU_VARIANT == MCU_ESP32 || MCU_VARIANT == MCU_NRF52
 	#include "Device.h"
 #endif
