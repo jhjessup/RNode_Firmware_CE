@@ -1,0 +1,132 @@
+name: Compile Firmware
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  ARDUINO_ESP_CORE_VER: 2.0.17
+
+jobs:
+  compile-esp32:
+    name: ESP32 / ${{ matrix.board }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        board:
+          - tbeam
+          - tbeam_sx1262
+          - lora32_v10
+          - lora32_v10_extled
+          - lora32_v20
+          - lora32_v21
+          - lora32_v21_extled
+          - lora32_v21_tcxo
+          - heltec32_v2
+          - heltec32_v2_extled
+          - heltec32_v3
+          - heltec_w_paper
+          - xiao_s3
+          - rnode_ng_20
+          - rnode_ng_21
+          - featheresp32
+          - genericesp32
+          - e22_esp32
+          - t3s3
+          - t3s3_sx126x
+          - t3s3_sx1280_pa
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install arduino-cli
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+          echo "$HOME/bin" >> $GITHUB_PATH
+
+      - name: Cache Arduino packages
+        id: cache-arduino
+        uses: actions/cache@v4
+        with:
+          path: ~/.arduino15
+          key: arduino-esp32-${{ env.ARDUINO_ESP_CORE_VER }}-${{ hashFiles('arduino-cli.yaml') }}
+
+      - name: Install ESP32 core and libraries
+        if: steps.cache-arduino.outputs.cache-hit != 'true'
+        run: |
+          arduino-cli core update-index --config-file arduino-cli.yaml
+          arduino-cli core install esp32:esp32@${{ env.ARDUINO_ESP_CORE_VER }} --config-file arduino-cli.yaml
+          arduino-cli lib install "Adafruit SSD1306"
+          arduino-cli lib install "Adafruit SH110X"
+          arduino-cli lib install "Adafruit ST7735 and ST7789 Library"
+          arduino-cli lib install "Adafruit NeoPixel"
+          arduino-cli lib install "XPowersLib"
+          arduino-cli lib install "Crypto"
+
+      - name: Patch ESP32 Bluetooth buffers
+        if: steps.cache-arduino.outputs.cache-hit != 'true'
+        run: |
+          BT_SERIAL="$HOME/.arduino15/packages/esp32/hardware/esp32/${{ env.ARDUINO_ESP_CORE_VER }}/libraries/BluetoothSerial/src/BluetoothSerial.cpp"
+          sed -i 's/^#define RX_QUEUE_SIZE .*/#define RX_QUEUE_SIZE 6144/' "$BT_SERIAL"
+          sed -i 's/^#define TX_QUEUE_SIZE .*/#define TX_QUEUE_SIZE 384/' "$BT_SERIAL"
+
+      - name: Install Python dependencies
+        run: pip install pyserial rns --upgrade --user --break-system-packages
+
+      - name: Compile ${{ matrix.board }}
+        run: make firmware-${{ matrix.board }}
+
+  compile-nrf52:
+    name: nRF52 / ${{ matrix.board }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        board:
+          - techo
+          - rak4631
+          - rak4631_sx1280
+          - opencom-xl
+          - heltec_t114
+          - heltec_t114_gps
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install arduino-cli
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+          echo "$HOME/bin" >> $GITHUB_PATH
+
+      - name: Cache Arduino packages
+        id: cache-arduino
+        uses: actions/cache@v4
+        with:
+          path: ~/.arduino15
+          key: arduino-nrf52-${{ hashFiles('arduino-cli.yaml') }}
+
+      - name: Install nRF52 core and libraries
+        if: steps.cache-arduino.outputs.cache-hit != 'true'
+        run: |
+          arduino-cli core update-index --config-file arduino-cli.yaml
+          arduino-cli core install adafruit:nrf52 --config-file arduino-cli.yaml
+          arduino-cli core install rakwireless:nrf52 --config-file arduino-cli.yaml
+          arduino-cli core install Heltec_nRF52:Heltec_nRF52 --config-file arduino-cli.yaml
+          arduino-cli lib install "Crypto"
+          arduino-cli lib install "Adafruit GFX Library"
+          arduino-cli lib install "GxEPD2"
+          arduino-cli lib install "TinyGPSPlus"
+          arduino-cli config set library.enable_unsafe_install true
+          arduino-cli lib install --git-url https://github.com/liamcottle/esp8266-oled-ssd1306#e16cee124fe26490cb14880c679321ad8ac89c95
+
+      - name: Install Python dependencies
+        run: pip install pyserial rns adafruit-nrfutil --upgrade --user --break-system-packages
+
+      - name: Compile ${{ matrix.board }}
+        run: make firmware-${{ matrix.board }}
